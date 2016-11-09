@@ -1,0 +1,32 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.toi.teamtoi.toi.HelpFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:background="#ffffff"
+            android:gravity="left|center_vertical"
+            android:text="Q1. 화장실 위치는 어떻게 찾나요?"
+            android:id="@+id/help_q1" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:background="#ffffff"
+            android:gravity="left|center_vertical"
+            android:text="Q2. 즐겨찾기 기능은 어떻게 사용하나요?"
+            android:id="@+id/help_q2" />
+
+    </LinearLayout>
+
+</FrameLayout>
