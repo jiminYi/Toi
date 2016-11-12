@@ -61,7 +61,6 @@ public class RestRoomAdapter1 extends BaseAdapter {
 
             viewHolder = new CampusViewHolder();
             viewHolder.position = (TextView) convertView.findViewById(R.id.tv_position);
-            viewHolder.status = (TextView) convertView.findViewById(R.id.tv_status);
             viewHolder.emptySapce = (TextView) convertView.findViewById(R.id.tv_empty_space);
             viewHolder.waitingTime = (TextView) convertView.findViewById(R.id.tv_waiting_time);
 
@@ -71,7 +70,6 @@ public class RestRoomAdapter1 extends BaseAdapter {
         }
 
         viewHolder.position.setText(mItemList.get(position).getPosition());
-        viewHolder.status.setText(mItemList.get(position).getStatus());
         viewHolder.emptySapce.setText(mItemList.get(position).getNumOfEmptySpace() + "/" + mItemList.get(position).getNumOfSpace());
         viewHolder.waitingTime.setText("대기시간: " + mItemList.get(position).getWaitingTime());
 
@@ -80,7 +78,6 @@ public class RestRoomAdapter1 extends BaseAdapter {
 
     public class CampusViewHolder {
         public TextView position;
-        public TextView status;
         public TextView emptySapce;
         public TextView waitingTime;
     }

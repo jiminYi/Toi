@@ -1,12 +1,22 @@
 package com.toi.teamtoi.toi.server;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.toi.teamtoi.toi.R;
+import com.toi.teamtoi.toi.RestRoomDetailFragment;
 import com.toi.teamtoi.toi.adapter.RestRoomAdapter1;
 import com.toi.teamtoi.toi.data.RestRoom;
 
@@ -22,21 +32,26 @@ import java.io.*;
 import java.util.*;
 
 public class Server {
-    private static final String TAG_RESULTS="result";
-    private static final String TAG_ID = "id";
-    private static final String TAG_NAME = "name";
-    private static final String TAG_ADD ="address";
+    private static final String TAG_POSITION = "position";
+    private static final String TAG_WAITING_TIME = "waiting_time";
+    private static final String TAG_FLOOR = "floor";
+    private static final String TAG_MAX_NUM_OF_PEOPLE = "max_num_of_people";
+    private static final String TAG_NUM_OF_SPACE = "num_of_space";
+    private static final String TAG_NUM_OF_EMPTY_SPACE = "num_of_empty_space";
+    private static final String TAG_VENDING_MACHINE = "vending_machine";
+    private static final String TAG_POWDER_ROOM = "powder_room";
     private String json;
+    private JSONArray buildings = null;
     private JSONArray restRooms = null;
     private ArrayList<RestRoom> restRoomList;
     private Context context;
     private FragmentActivity fragmentActivity;
-    private ListView listView;
+    private LinearLayout linearLayout;
 
-    public Server(Context context, FragmentActivity fragmentActivity, ListView listView) {
+    public Server(Context context, FragmentActivity fragmentActivity, LinearLayout linearLayout) {
         this.context = context;
         this.fragmentActivity = fragmentActivity;
-        this.listView = listView;
+        this.linearLayout = linearLayout;
     }
 
     public void getData(String url, List<PostParam> params){
@@ -54,7 +69,7 @@ public class Server {
                 String result = null;
                 try{
                     HttpClient httpclient = new DefaultHttpClient();
-                    HttpPost httppost= new HttpPost("http://35.162.76.175/empty.php");
+                    HttpPost httppost= new HttpPost(params[0]);
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity responseResultEntity=response.getEntity();
@@ -79,28 +94,73 @@ public class Server {
             @Override
             protected void onPostExecute(String result){
                 json = result;
-                showList();
+                Log.d("server", json);
+                showBuildingList();
             }
         }
         GetDataJSON server = new GetDataJSON(params);
         server.execute(url);
     }
 
-    private void showList(){
+    private void showBuildingList() {
         try {
             JSONObject jsonObj = new JSONObject(json);
-            restRooms = jsonObj.getJSONArray(TAG_RESULTS);
-            for(int i = 0;i < restRooms.length(); i++){
-                JSONObject c = restRooms.getJSONObject(i);
-                String position = c.getString(TAG_ID);
-                String name = c.getString(TAG_NAME);
-                String address = c.getString(TAG_ADD);
-                //String position, String waitingTime, String status, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom
-                RestRoom persons = new RestRoom();
-                restRoomList.add(persons);
+            Iterator keys = jsonObj.keys();
+            while(keys.hasNext()){
+                final String buildingName = (String)keys.next();
+                final LinearLayout subLayout = new LinearLayout(fragmentActivity);
+                subLayout.setOrientation(LinearLayout.VERTICAL);
+                FrameLayout.LayoutParams pm = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                pm.gravity = Gravity.CENTER;
+                final Button btnBuilding = new Button(context);
+                final ListView lvRestRoom = new ListView(context);
+                btnBuilding.setText(buildingName + "(펼치기)");
+                btnBuilding.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(fragmentActivity, "건물: " + buildingName, Toast.LENGTH_SHORT).show();
+                        if (btnBuilding.getText().toString().contains("펼치기")) {
+                            lvRestRoom.setVisibility(View.VISIBLE);
+                            btnBuilding.setText(buildingName + "(숨기기)");
+                        } else {
+                            lvRestRoom.setVisibility(View.GONE);
+                            btnBuilding.setText(buildingName + "(펼치기)");
+                        }
+                    }
+                });
+                JSONArray restRooms = jsonObj.getJSONArray(buildingName);
+                List<RestRoom> restRoomList = new ArrayList<RestRoom>();
+                for(int i = 0; i< restRooms.length(); i++) {
+                    JSONObject c = restRooms.getJSONObject(i);
+                    String position = c.getString(TAG_POSITION);
+                    String waitingTime = c.getString(TAG_WAITING_TIME);
+                    int floor = c.getInt(TAG_FLOOR);
+                    int maxNumOfPeople = c.getInt(TAG_MAX_NUM_OF_PEOPLE);
+                    int numOfSpace = c.getInt(TAG_NUM_OF_SPACE);
+                    int numOfEmptySpace = c.getInt(TAG_NUM_OF_EMPTY_SPACE);
+                    boolean hasVendingMachine = c.getInt(TAG_VENDING_MACHINE) > 0 ? true : false;
+                    boolean isPowderRoom = c.getInt(TAG_POWDER_ROOM) > 0 ? true : false;
+                    RestRoom restRoom = new RestRoom(position, waitingTime, floor, maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom);
+                    Log.d("server", restRoom.toString());
+                    restRoomList.add(restRoom);
+                }
+                RestRoomAdapter1 restRoomAdapter1 = new RestRoomAdapter1(context, R.layout.restroom_item1, restRoomList, fragmentActivity);
+                lvRestRoom.setAdapter(restRoomAdapter1);
+                lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Fragment restRoomDetail = RestRoomDetailFragment.newInstance();
+                        FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_main, restRoomDetail);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
+                lvRestRoom.setVisibility(View.GONE);
+                subLayout.addView(btnBuilding);
+                subLayout.addView(lvRestRoom);
+                linearLayout.addView(subLayout);
             }
-            RestRoomAdapter1 adapter = new RestRoomAdapter1(context, R.layout.restroom_item1, restRoomList, fragmentActivity);
-            listView.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }

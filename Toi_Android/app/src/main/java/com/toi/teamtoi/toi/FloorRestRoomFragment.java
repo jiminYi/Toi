@@ -77,8 +77,8 @@ public class FloorRestRoomFragment extends Fragment {
                 final ListView lvRestRoom = new ListView(getActivity());
                 List<RestRoom> restRooms = new ArrayList<RestRoom>();
                 //String position, String waitingTime, String status, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom
-                restRooms.add(new RestRoom("명신 앞", "3분", "혼잡", 3, 7, 3, 0, false, false));
-                restRooms.add(new RestRoom("명신 뒤", "1분", "보통", 3, 2, 3, 0, false, false));
+                restRooms.add(new RestRoom("명신 앞", "3분", 3, 7, 3, 0, false, false));
+                restRooms.add(new RestRoom("명신 뒤", "1분", 3, 2, 3, 0, false, false));
                 RestRoomAdapter1 restRoomAdapter1 = new RestRoomAdapter1(getContext(), R.layout.restroom_item1, restRooms, getActivity());
                 lvRestRoom.setAdapter(restRoomAdapter1);
                 lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -3,7 +3,6 @@ package com.toi.teamtoi.toi.data;
 public class RestRoom {
     private String position;
     private String waitingTime;
-    private String status;
     private int floor;
     private int maxNumOfPeople;
     private int numOfSpace;
@@ -11,10 +10,9 @@ public class RestRoom {
     private boolean hasVendingMachine;
     private boolean isPowderRoom;
 
-    public RestRoom(String position, String waitingTime, String status, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom) {
+    public RestRoom(String position, String waitingTime, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom) {
         this.position = position;
         this.waitingTime = waitingTime;
-        this.status = status;
         this.floor = floor;
         this.maxNumOfPeople = maxNumOfPeople;
         this.numOfSpace = numOfSpace;
@@ -29,10 +27,6 @@ public class RestRoom {
 
     public String getWaitingTime() {
         return waitingTime;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public int getFloor() {
@@ -57,5 +51,19 @@ public class RestRoom {
 
     public int getNumOfEmptySpace() {
         return  numOfEmptySpace;
+    }
+
+    @Override
+    public String toString() {
+        return "RestRoom{" +
+                "floor=" + floor +
+                ", position='" + position + '\'' +
+                ", waitingTime='" + waitingTime + '\'' +
+                ", maxNumOfPeople=" + maxNumOfPeople +
+                ", numOfSpace=" + numOfSpace +
+                ", numOfEmptySpace=" + numOfEmptySpace +
+                ", hasVendingMachine=" + hasVendingMachine +
+                ", isPowderRoom=" + isPowderRoom +
+                '}';
     }
 }
