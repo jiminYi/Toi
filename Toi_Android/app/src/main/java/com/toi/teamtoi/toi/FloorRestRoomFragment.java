@@ -58,7 +58,7 @@ public class FloorRestRoomFragment extends Fragment {
         List<PostParam> postParams = new ArrayList<PostParam>();
         PostParam postParam = new PostParam("building_name", buildingName);
         postParams.add(postParam);
-        server.getData("http://35.162.76.175/rest_room_by_building.php", postParams);
+        server.getData(MainActivity.SERVER_ADDR + "rest_room_by_building.php", postParams);
         return view;
     }
 }

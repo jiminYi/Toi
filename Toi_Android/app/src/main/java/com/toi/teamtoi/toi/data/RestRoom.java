@@ -1,6 +1,9 @@
 package com.toi.teamtoi.toi.data;
 
-public class RestRoom {
+import java.io.Serializable;
+
+public class RestRoom implements Serializable {
+    private String buildingName;
     private String position;
     private String waitingTime;
     private int floor;
@@ -9,8 +12,10 @@ public class RestRoom {
     private int numOfEmptySpace;
     private boolean hasVendingMachine;
     private boolean isPowderRoom;
+    private String imagePath;
 
-    public RestRoom(String position, String waitingTime, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom) {
+    public RestRoom(String buildingName, String position, String waitingTime, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom, String imagePath) {
+        this.buildingName = buildingName;
         this.position = position;
         this.waitingTime = waitingTime;
         this.floor = floor;
@@ -19,6 +24,11 @@ public class RestRoom {
         this.numOfEmptySpace = numOfEmptySpace;
         this.hasVendingMachine = hasVendingMachine;
         this.isPowderRoom = isPowderRoom;
+        this.imagePath = imagePath;
+    }
+
+    public String getBuildingName() {
+        return buildingName;
     }
 
     public String getPosition() {
@@ -51,6 +61,10 @@ public class RestRoom {
 
     public int getNumOfEmptySpace() {
         return  numOfEmptySpace;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 
     @Override

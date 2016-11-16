@@ -20,6 +20,7 @@ import com.toi.teamtoi.toi.data.Building;
 import com.toi.teamtoi.toi.data.Campus;
 import com.toi.teamtoi.toi.data.RestRoom;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -34,6 +35,9 @@ public class RestRoomAdapter extends BaseAdapter {
         this.mContext = context;
         this.mLayout = layout;
         this.mItemList = itemList;
+        if (mItemList == null) {
+            mItemList = new ArrayList<RestRoom>();
+        }
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.fragmentActivity = fragmentActivity;
     }

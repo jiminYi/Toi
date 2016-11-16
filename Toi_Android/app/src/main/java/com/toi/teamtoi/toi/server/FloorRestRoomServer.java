@@ -48,8 +48,9 @@ public class FloorRestRoomServer {
     private static final String TAG_NUM_OF_EMPTY_SPACE = "num_of_empty_space";
     private static final String TAG_VENDING_MACHINE = "vending_machine";
     private static final String TAG_POWDER_ROOM = "powder_room";
+    private static final String TAG_IMAGE = "image";
     private HashMap<String , List<RestRoom>> map;
-    private String json;
+    private String json, buildingName;
     private int startFloor, endFloor;
     private Context context;
     private FragmentActivity fragmentActivity;
@@ -72,6 +73,7 @@ public class FloorRestRoomServer {
             public GetDataJSON(List<PostParam> params) {
                 for(int i = 0; i < params.size(); i++) {
                     nameValuePairs.add(new BasicNameValuePair(params.get(i).getKey(), params.get(i).getValue()));
+                    buildingName = params.get(i).getValue();
                 }
             }
 
@@ -105,7 +107,6 @@ public class FloorRestRoomServer {
             @Override
             protected void onPostExecute(String result){
                 json = result;
-                Log.d("server", json);
                 parseJSON();
                 showRestRoomList();
             }
@@ -131,8 +132,8 @@ public class FloorRestRoomServer {
                     int numOfEmptySpace = c.getInt(TAG_NUM_OF_EMPTY_SPACE);
                     boolean hasVendingMachine = c.getInt(TAG_VENDING_MACHINE) > 0 ? true : false;
                     boolean isPowderRoom = c.getInt(TAG_POWDER_ROOM) > 0 ? true : false;
-                    RestRoom restRoom = new RestRoom(position, waitingTime, Integer.parseInt(floor), maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom);
-                    Log.d("server", restRoom.toString());
+                    String imagePath = c.getString(TAG_IMAGE);
+                    RestRoom restRoom = new RestRoom(buildingName, position, waitingTime, Integer.parseInt(floor), maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
                     restRoomList.add(restRoom);
                 }
                 map.put(floor, restRoomList);
@@ -151,17 +152,13 @@ public class FloorRestRoomServer {
                 pm.gravity = Gravity.CENTER;
                 final Button mButton = new Button(fragmentActivity);
                 final ListView lvRestRoom = new ListView(fragmentActivity);
-                Log.d("server", "floor = " + String.valueOf(i));
-                List<RestRoom> restRooms = map.get(String.valueOf(i));
-                if (restRooms == null) {
-                    restRooms = new ArrayList<RestRoom>();
-                }
+                final List<RestRoom> restRooms = map.get(String.valueOf(i));
                 RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRooms, fragmentActivity);
                 lvRestRoom.setAdapter(restRoomAdapter1);
                 lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Fragment restRoomDetail = RestRoomDetailFragment.newInstance();
+                        Fragment restRoomDetail = RestRoomDetailFragment.newInstance(restRooms.get(position));
                         FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_main, restRoomDetail);
                         transaction.addToBackStack(null);

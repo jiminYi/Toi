@@ -40,6 +40,7 @@ public class BuildingRestRoomServer {
     private static final String TAG_NUM_OF_EMPTY_SPACE = "num_of_empty_space";
     private static final String TAG_VENDING_MACHINE = "vending_machine";
     private static final String TAG_POWDER_ROOM = "powder_room";
+    private static final String TAG_IMAGE = "image";
     private String json;
     private JSONArray buildings = null;
     private JSONArray restRooms = null;
@@ -94,7 +95,6 @@ public class BuildingRestRoomServer {
             @Override
             protected void onPostExecute(String result){
                 json = result;
-                Log.d("server", json);
                 showBuildingList();
             }
         }
@@ -129,7 +129,7 @@ public class BuildingRestRoomServer {
                     }
                 });
                 JSONArray restRooms = jsonObj.getJSONArray(buildingName);
-                List<RestRoom> restRoomList = new ArrayList<RestRoom>();
+                final List<RestRoom> restRoomList = new ArrayList<RestRoom>();
                 for(int i = 0; i< restRooms.length(); i++) {
                     JSONObject c = restRooms.getJSONObject(i);
                     String position = c.getString(TAG_POSITION);
@@ -140,7 +140,8 @@ public class BuildingRestRoomServer {
                     int numOfEmptySpace = c.getInt(TAG_NUM_OF_EMPTY_SPACE);
                     boolean hasVendingMachine = c.getInt(TAG_VENDING_MACHINE) > 0 ? true : false;
                     boolean isPowderRoom = c.getInt(TAG_POWDER_ROOM) > 0 ? true : false;
-                    RestRoom restRoom = new RestRoom(position, waitingTime, floor, maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom);
+                    String imagePath = c.getString(TAG_IMAGE);
+                    RestRoom restRoom = new RestRoom(buildingName, position, waitingTime, floor, maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
                     Log.d("server", restRoom.toString());
                     restRoomList.add(restRoom);
                 }
@@ -149,7 +150,7 @@ public class BuildingRestRoomServer {
                 lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Fragment restRoomDetail = RestRoomDetailFragment.newInstance();
+                        Fragment restRoomDetail = RestRoomDetailFragment.newInstance(restRoomList.get(position));
                         FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_main, restRoomDetail);
                         transaction.addToBackStack(null);

@@ -19,7 +19,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String KEY_FIRST = "first";
-    public static final String SERVER_ADDR = "http://35.162.76.175/";
+    public static final String SERVER_ADDR = "http://SERVER_IP/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editor.commit();
         }
         Log.d("fist", first);
-        Fragment fragment = BuildingListFragment.newInstance("http://35.162.76.175/campus_building.php");
+        Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
         switch (first) {
             case "전체 화장실":
-                fragment = BuildingListFragment.newInstance("http://35.162.76.175/campus_building.php");
+                fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
                 break;
             case "즐겨찾기":
                 setTitle("즐겨찾기");
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_whole) {
-            Fragment wholeFragment = BuildingListFragment.newInstance("http://35.162.76.175/campus_building.php");
+            Fragment wholeFragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()

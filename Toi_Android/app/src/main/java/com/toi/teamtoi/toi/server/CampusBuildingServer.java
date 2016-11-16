@@ -86,7 +86,6 @@ public class CampusBuildingServer {
             @Override
             protected void onPostExecute(String result){
                 json = result;
-                Log.d("server", json);
                 showCampusBuildingList();
             }
         }
