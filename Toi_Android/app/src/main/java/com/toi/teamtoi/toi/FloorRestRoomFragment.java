@@ -1,27 +1,15 @@
 package com.toi.teamtoi.toi;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Layout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.toi.teamtoi.toi.adapter.RestRoomAdapter1;
-import com.toi.teamtoi.toi.data.RestRoom;
+import com.toi.teamtoi.toi.server.FloorRestRoomServer;
+import com.toi.teamtoi.toi.server.PostParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,58 +54,11 @@ public class FloorRestRoomFragment extends Fragment {
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_floor_rest_room_title);
         tvTitle.setText(buildingName);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.floor_rest_room_layout);
-        Log.d("floor-rest room", "start: " + startFloor + ", end: " + endFloor);
-        for(int i = startFloor; i <= endFloor; i++) {
-            if(i != 0) {
-                final LinearLayout subLayout = new LinearLayout(getActivity());
-                subLayout.setOrientation(LinearLayout.VERTICAL);
-                FrameLayout.LayoutParams pm = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-                pm.gravity = Gravity.CENTER;
-                final Button mButton = new Button(getActivity());
-                final ListView lvRestRoom = new ListView(getActivity());
-                List<RestRoom> restRooms = new ArrayList<RestRoom>();
-                //String position, String waitingTime, String status, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom
-                restRooms.add(new RestRoom("명신 앞", "3분", 3, 7, 3, 0, false, false));
-                restRooms.add(new RestRoom("명신 뒤", "1분", 3, 2, 3, 0, false, false));
-                RestRoomAdapter1 restRoomAdapter1 = new RestRoomAdapter1(getContext(), R.layout.restroom_item1, restRooms, getActivity());
-                lvRestRoom.setAdapter(restRoomAdapter1);
-                lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Fragment restRoomDetail = RestRoomDetailFragment.newInstance();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragment_main, restRoomDetail);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                });
-                final String floorStr;
-                if(i < 0) {
-                    floorStr = "B" + (-i) + "층";
-                } else {
-                    floorStr = i + "층";
-                }
-                mButton.setText(floorStr + "(펼치기)");
-                mButton.setLayoutParams(pm);
-                mButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getActivity(), "건물: " + buildingName + ", 층: " + mButton.getText().toString().replace("(*)", ""), Toast.LENGTH_SHORT).show();
-                        if (mButton.getText().toString().contains("펼치기")) {
-                            lvRestRoom.setVisibility(View.VISIBLE);
-                            mButton.setText(floorStr + "(숨기기)");
-                        } else {
-                            lvRestRoom.setVisibility(View.GONE);
-                            mButton.setText(floorStr + "(펼치기)");
-                        }
-                    }
-                });
-                lvRestRoom.setVisibility(View.GONE);
-                subLayout.addView(mButton);
-                subLayout.addView(lvRestRoom);
-                linearLayout.addView(subLayout);
-            }
-        }
+        FloorRestRoomServer server = new FloorRestRoomServer(startFloor, endFloor, getContext(), getActivity(), linearLayout);
+        List<PostParam> postParams = new ArrayList<PostParam>();
+        PostParam postParam = new PostParam("building_name", buildingName);
+        postParams.add(postParam);
+        server.getData("http://35.162.76.175/rest_room_by_building.php", postParams);
         return view;
     }
 }

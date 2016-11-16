@@ -23,14 +23,14 @@ import com.toi.teamtoi.toi.data.RestRoom;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-public class RestRoomAdapter1 extends BaseAdapter {
+public class RestRoomAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private List<RestRoom> mItemList;
     private int mLayout;
     private FragmentActivity fragmentActivity;
 
-    public RestRoomAdapter1(Context context, int layout, List<RestRoom> itemList, FragmentActivity fragmentActivity) {
+    public RestRoomAdapter(Context context, int layout, List<RestRoom> itemList, FragmentActivity fragmentActivity) {
         this.mContext = context;
         this.mLayout = layout;
         this.mItemList = itemList;

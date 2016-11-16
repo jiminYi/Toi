@@ -19,6 +19,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String KEY_FIRST = "first";
+    public static final String SERVER_ADDR = "http://35.162.76.175/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,30 +38,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editor.commit();
         }
         Log.d("fist", first);
-        Fragment fragment = BuildingListFragment.newInstance();
+        Fragment fragment = BuildingListFragment.newInstance("http://35.162.76.175/campus_building.php");
         switch (first) {
             case "전체 화장실":
-                fragment = BuildingListFragment.newInstance();
+                fragment = BuildingListFragment.newInstance("http://35.162.76.175/campus_building.php");
                 break;
             case "즐겨찾기":
                 setTitle("즐겨찾기");
-                fragment = BuildingRestRoomFragment.newInstance();
+                fragment = BuildingRestRoomFragment.newInstance("#");
                 break;
             case "빈 화장실":
                 setTitle("빈 화장실");
-                fragment = BuildingRestRoomFragment.newInstance();
+                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
                 break;
             case "가까운 화장실":
                 setTitle("가까운 화장실");
-                fragment = BuildingRestRoomFragment.newInstance();
+                fragment = BuildingRestRoomFragment.newInstance("#");
                 break;
             case "파우더룸":
                 setTitle("파우더룸");
-                fragment = BuildingRestRoomFragment.newInstance();
+                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
                 break;
             case "자판기":
                 setTitle("자판기");
-                fragment = BuildingRestRoomFragment.newInstance();
+                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
                 break;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -90,17 +91,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+//        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
 //        if (id == R.id.action_settings) {
@@ -115,42 +112,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_whole) {
-            Fragment wholeFragment = BuildingListFragment.newInstance();
+            Fragment wholeFragment = BuildingListFragment.newInstance("http://35.162.76.175/campus_building.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_main, wholeFragment).commit();
         } else if (id == R.id.nav_favorite) {
             setTitle("즐겨찾기");
-            Fragment favoriteFragment = BuildingRestRoomFragment.newInstance();
+            Fragment favoriteFragment = BuildingRestRoomFragment.newInstance("#");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_main, favoriteFragment).commit();
         } else if (id == R.id.nav_empty) {
             setTitle("빈 화장실");
-            Fragment emptyFragment = BuildingRestRoomFragment.newInstance();
+            Fragment emptyFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_main, emptyFragment).commit();
         } else if (id == R.id.nav_near) {
             setTitle("가까운 화장실");
-            Fragment nearFragment = BuildingRestRoomFragment.newInstance();
+            Fragment nearFragment = BuildingRestRoomFragment.newInstance("#");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_main, nearFragment).commit();
         } else if (id == R.id.nav_powder_room) {
             setTitle("파우더룸");
-            Fragment powderRoomFragment = BuildingRestRoomFragment.newInstance();
+            Fragment powderRoomFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_main, powderRoomFragment).commit();
         } else if (id == R.id.nav_vending_machine) {
             setTitle("자판기");
-            Fragment vendingMachineFragment = BuildingRestRoomFragment.newInstance();
+            Fragment vendingMachineFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.toi.teamtoi.toi.R;
 import com.toi.teamtoi.toi.RestRoomDetailFragment;
-import com.toi.teamtoi.toi.adapter.RestRoomAdapter1;
+import com.toi.teamtoi.toi.adapter.RestRoomAdapter;
 import com.toi.teamtoi.toi.data.RestRoom;
 
 import org.apache.http.*;
@@ -31,7 +31,7 @@ import org.json.*;
 import java.io.*;
 import java.util.*;
 
-public class Server {
+public class BuildingRestRoomServer {
     private static final String TAG_POSITION = "position";
     private static final String TAG_WAITING_TIME = "waiting_time";
     private static final String TAG_FLOOR = "floor";
@@ -48,7 +48,7 @@ public class Server {
     private FragmentActivity fragmentActivity;
     private LinearLayout linearLayout;
 
-    public Server(Context context, FragmentActivity fragmentActivity, LinearLayout linearLayout) {
+    public BuildingRestRoomServer(Context context, FragmentActivity fragmentActivity, LinearLayout linearLayout) {
         this.context = context;
         this.fragmentActivity = fragmentActivity;
         this.linearLayout = linearLayout;
@@ -144,7 +144,7 @@ public class Server {
                     Log.d("server", restRoom.toString());
                     restRoomList.add(restRoom);
                 }
-                RestRoomAdapter1 restRoomAdapter1 = new RestRoomAdapter1(context, R.layout.restroom_item1, restRoomList, fragmentActivity);
+                RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRoomList, fragmentActivity);
                 lvRestRoom.setAdapter(restRoomAdapter1);
                 lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
