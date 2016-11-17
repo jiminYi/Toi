@@ -19,7 +19,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String KEY_FIRST = "first";
-    public static final String SERVER_ADDR = "http://SERVER_IP/";
+    public static final String SERVER_ADDR = "http://35.161.133.201/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,22 +11,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon" />
-
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Toi"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Toi"
+            android:layout_marginLeft="20dp"
+            android:textSize="30dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
+        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Team Toi" />
