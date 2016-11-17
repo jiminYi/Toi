@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +15,9 @@ import android.widget.ListView;
 
 import com.toi.teamtoi.toi.R;
 import com.toi.teamtoi.toi.RestRoomDetailFragment;
+import com.toi.teamtoi.toi.adapter.ButtonListAdapter;
 import com.toi.teamtoi.toi.adapter.RestRoomAdapter;
+import com.toi.teamtoi.toi.data.FloorRestRoom;
 import com.toi.teamtoi.toi.data.RestRoom;
 
 import org.apache.http.HttpEntity;
@@ -35,7 +36,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,20 +49,17 @@ public class FloorRestRoomServer {
     private static final String TAG_VENDING_MACHINE = "vending_machine";
     private static final String TAG_POWDER_ROOM = "powder_room";
     private static final String TAG_IMAGE = "image";
-    private HashMap<String , List<RestRoom>> map;
+    private List<FloorRestRoom> resultList;
     private String json, buildingName;
-    private int startFloor, endFloor;
     private Context context;
     private FragmentActivity fragmentActivity;
-    private LinearLayout linearLayout;
+    private ListView listView;
 
-    public FloorRestRoomServer(int startFloor, int endFloor, Context context, FragmentActivity fragmentActivity, LinearLayout linearLayout) {
-        this.startFloor = startFloor;
-        this.endFloor = endFloor;
+    public FloorRestRoomServer(Context context, FragmentActivity fragmentActivity, ListView listView) {
         this.context = context;
         this.fragmentActivity = fragmentActivity;
-        this.linearLayout = linearLayout;
-        map = new HashMap<String , List<RestRoom>>();
+        this.listView = listView;
+        resultList = new ArrayList<FloorRestRoom>();
 
     }
 
@@ -136,7 +133,8 @@ public class FloorRestRoomServer {
                     RestRoom restRoom = new RestRoom(buildingName, position, waitingTime, Integer.parseInt(floor), maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
                     restRoomList.add(restRoom);
                 }
-                map.put(floor, restRoomList);
+                FloorRestRoom floorRestRoom = new FloorRestRoom(floor, restRoomList);
+                resultList.add(floorRestRoom);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -144,52 +142,7 @@ public class FloorRestRoomServer {
     }
 
     private void showRestRoomList() {
-        for(int i = startFloor; i <= endFloor; i++) {
-            if(i != 0) {
-                final LinearLayout subLayout = new LinearLayout(fragmentActivity);
-                subLayout.setOrientation(LinearLayout.VERTICAL);
-                FrameLayout.LayoutParams pm = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-                pm.gravity = Gravity.CENTER;
-                final Button mButton = new Button(fragmentActivity);
-                final ListView lvRestRoom = new ListView(fragmentActivity);
-                final List<RestRoom> restRooms = map.get(String.valueOf(i));
-                RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRooms, fragmentActivity);
-                lvRestRoom.setAdapter(restRoomAdapter1);
-                lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Fragment restRoomDetail = RestRoomDetailFragment.newInstance(restRooms.get(position));
-                        FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragment_main, restRoomDetail);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                });
-                final String floorStr;
-                if(i < 0) {
-                    floorStr = "B" + (-i) + "층";
-                } else {
-                    floorStr = i + "층";
-                }
-                mButton.setText(floorStr + "(펼치기)");
-                mButton.setLayoutParams(pm);
-                mButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mButton.getText().toString().contains("펼치기")) {
-                            lvRestRoom.setVisibility(View.VISIBLE);
-                            mButton.setText(floorStr + "(숨기기)");
-                        } else {
-                            lvRestRoom.setVisibility(View.GONE);
-                            mButton.setText(floorStr + "(펼치기)");
-                        }
-                    }
-                });
-                lvRestRoom.setVisibility(View.GONE);
-                subLayout.addView(mButton);
-                subLayout.addView(lvRestRoom);
-                linearLayout.addView(subLayout);
-            }
-        }
+        ButtonListAdapter buttonListAdapter = new ButtonListAdapter(context, R.layout.button_list_item, resultList, fragmentActivity);
+        listView.setAdapter(buttonListAdapter);
     }
 }

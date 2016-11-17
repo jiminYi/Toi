@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.toi.teamtoi.toi.server.FloorRestRoomServer;
@@ -53,8 +54,8 @@ public class FloorRestRoomFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_floor_rest_room, container, false);
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_floor_rest_room_title);
         tvTitle.setText(buildingName);
-        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.floor_rest_room_layout);
-        FloorRestRoomServer server = new FloorRestRoomServer(startFloor, endFloor, getContext(), getActivity(), linearLayout);
+        ListView lvList = (ListView) view.findViewById(R.id.lv_list);
+        FloorRestRoomServer server = new FloorRestRoomServer(getContext(), getActivity(), lvList);
         List<PostParam> postParams = new ArrayList<PostParam>();
         PostParam postParam = new PostParam("building_name", buildingName);
         postParams.add(postParam);

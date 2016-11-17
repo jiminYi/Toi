@@ -16,5 +16,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_gravity="center_horizontal"
             android:id="@+id/tv_floor_rest_room_title" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_list"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </FrameLayout>
