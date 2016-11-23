@@ -1,9 +1,13 @@
 package com.toi.teamtoi.toi;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -17,9 +21,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
+
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String KEY_FIRST = "first";
     public static final String SERVER_ADDR = "http://35.161.133.201/";
+    public static final String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93A";
+    public static final boolean SCAN_RECO_ONLY = true;
+    public static final boolean ENABLE_BACKGROUND_RANGING_TIMEOUT = true;
+    public static final boolean DISCONTINUOUS_SCAN = false;
+
+    private static final int REQUEST_LOCATION = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case "가까운 화장실":
                 setTitle("가까운 화장실");
-                fragment = BuildingRestRoomFragment.newInstance("#");
+                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR +"near.php");
                 break;
             case "파우더룸":
                 setTitle("파우더룸");
@@ -68,6 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fragmentManager.beginTransaction().replace(R.id.fragment_main, fragment).commit();
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.i("MainActivity", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is not granted.");
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+            } else {
+                Log.i("MainActivity", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is already granted.");
+            }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -133,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .replace(R.id.fragment_main, emptyFragment).commit();
         } else if (id == R.id.nav_near) {
             setTitle("가까운 화장실");
-            Fragment nearFragment = BuildingRestRoomFragment.newInstance("#");
+            Fragment nearFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"near.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
