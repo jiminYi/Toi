@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FloorRestRoomServer {
+    private static final String TAG_RID = "rid";
     private static final String TAG_POSITION = "position";
     private static final String TAG_WAITING_TIME = "waiting_time";
     private static final String TAG_FLOOR = "floor";
@@ -125,6 +126,7 @@ public class FloorRestRoomServer {
                 JSONArray restRoomJSONArray = jsonObj.getJSONArray(floor);
                 for (int i = 0; i < restRoomJSONArray.length(); i++) {
                     JSONObject c = restRoomJSONArray.getJSONObject(i);
+                    String rid = String.valueOf(c.getInt(TAG_RID));
                     String position = c.getString(TAG_POSITION);
                     String waitingTime = c.getString(TAG_WAITING_TIME);
                     int maxNumOfPeople = c.getInt(TAG_MAX_NUM_OF_PEOPLE);
@@ -133,7 +135,7 @@ public class FloorRestRoomServer {
                     boolean hasVendingMachine = c.getInt(TAG_VENDING_MACHINE) > 0 ? true : false;
                     boolean isPowderRoom = c.getInt(TAG_POWDER_ROOM) > 0 ? true : false;
                     String imagePath = c.getString(TAG_IMAGE);
-                    RestRoom restRoom = new RestRoom(buildingName, position, waitingTime, Integer.parseInt(floor), maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
+                    RestRoom restRoom = new RestRoom(rid, buildingName, position, waitingTime, Integer.parseInt(floor), maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
                     restRoomList.add(restRoom);
                 }
                 map.put(floor, restRoomList);

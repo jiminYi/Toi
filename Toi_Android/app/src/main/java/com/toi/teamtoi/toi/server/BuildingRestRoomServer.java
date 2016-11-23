@@ -32,6 +32,7 @@ import java.io.*;
 import java.util.*;
 
 public class BuildingRestRoomServer {
+    private static final String TAG_RID = "rid";
     private static final String TAG_POSITION = "position";
     private static final String TAG_WAITING_TIME = "waiting_time";
     private static final String TAG_FLOOR = "floor";
@@ -132,6 +133,7 @@ public class BuildingRestRoomServer {
                 final List<RestRoom> restRoomList = new ArrayList<RestRoom>();
                 for(int i = 0; i< restRooms.length(); i++) {
                     JSONObject c = restRooms.getJSONObject(i);
+                    String rid = String.valueOf(c.getInt(TAG_RID));
                     String position = c.getString(TAG_POSITION);
                     String waitingTime = c.getString(TAG_WAITING_TIME);
                     int floor = c.getInt(TAG_FLOOR);
@@ -141,7 +143,7 @@ public class BuildingRestRoomServer {
                     boolean hasVendingMachine = c.getInt(TAG_VENDING_MACHINE) > 0 ? true : false;
                     boolean isPowderRoom = c.getInt(TAG_POWDER_ROOM) > 0 ? true : false;
                     String imagePath = c.getString(TAG_IMAGE);
-                    RestRoom restRoom = new RestRoom(buildingName, position, waitingTime, floor, maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
+                    RestRoom restRoom = new RestRoom(rid, buildingName, position, waitingTime, floor, maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
                     Log.d("server", restRoom.toString());
                     restRoomList.add(restRoom);
                 }
