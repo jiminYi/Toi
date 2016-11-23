@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final boolean SCAN_RECO_ONLY = true;
     public static final boolean ENABLE_BACKGROUND_RANGING_TIMEOUT = true;
     public static final boolean DISCONTINUOUS_SCAN = false;
-
     private static final int REQUEST_LOCATION = 10;
 
     @Override
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editor.putString(MainActivity.KEY_FIRST, first);
             editor.commit();
         }
-        Log.d("fist", first);
+
         Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
         switch (first) {
             case "전체 화장실":
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case "가까운 화장실":
                 setTitle("가까운 화장실");
-                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR +"near.php");
+                fragment = NearRestRoomFragment.newInstance(SERVER_ADDR +"near.php");
                 break;
             case "파우더룸":
                 setTitle("파우더룸");
@@ -118,13 +117,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -154,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .replace(R.id.fragment_main, emptyFragment).commit();
         } else if (id == R.id.nav_near) {
             setTitle("가까운 화장실");
-            Fragment nearFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"near.php");
+            Fragment nearFragment = NearRestRoomFragment.newInstance(SERVER_ADDR+"near.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
@@ -180,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_main, settingFragment).commit();
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

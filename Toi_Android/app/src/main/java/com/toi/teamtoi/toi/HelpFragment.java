@@ -12,6 +12,7 @@ import android.widget.Button;
 
 public class HelpFragment extends Fragment {
     public HelpFragment() {
+
     }
 
     public static HelpFragment newInstance() {

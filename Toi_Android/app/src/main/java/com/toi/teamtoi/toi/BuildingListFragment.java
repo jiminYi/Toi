@@ -42,8 +42,7 @@ public class BuildingListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_building_list, container, false);
         ListView lv_campus = (ListView) view.findViewById(R.id.lv_campus);
         CampusBuildingServer server = new CampusBuildingServer(getContext(), getActivity(), lv_campus);

@@ -11,19 +11,13 @@ import com.perples.recosdk.RECOServiceConnectListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by Administrator on 2016-11-23.
- */
-
 public abstract class RecoFragment extends Fragment implements RECOServiceConnectListener{
-
     protected RECOBeaconManager mRecoManager;
     protected ArrayList<RECOBeaconRegion> mRegions;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mRecoManager = RECOBeaconManager.getInstance(getContext(), MainActivity.SCAN_RECO_ONLY, MainActivity.ENABLE_BACKGROUND_RANGING_TIMEOUT);
         mRegions = this.generateBeaconRegion();
     }
@@ -42,6 +36,7 @@ public abstract class RecoFragment extends Fragment implements RECOServiceConnec
     public void onServiceFail(RECOErrorCode recoErrorCode) {
 
     }
+
     private ArrayList<RECOBeaconRegion> generateBeaconRegion() {
         ArrayList<RECOBeaconRegion> regions = new ArrayList<RECOBeaconRegion>();
 

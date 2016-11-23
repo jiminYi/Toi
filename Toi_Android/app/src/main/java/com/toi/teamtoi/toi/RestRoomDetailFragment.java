@@ -23,6 +23,7 @@ public class RestRoomDetailFragment extends Fragment {
     private static final String ARG_PARAM_RESTROOM = "restroom";
     private RestRoom restRoom;
     private DBHelper dbHelper;
+
     public RestRoomDetailFragment() {
 
     }
@@ -72,16 +73,12 @@ public class RestRoomDetailFragment extends Fragment {
 
         TextView position = (TextView) view.findViewById(R.id.tv_building_and_floor);
         String floor = "";
-
-
-
         if (restRoom.getFloor() > 0) {
             floor = restRoom.getFloor() + "층";
         } else {
             floor = "B" + restRoom.getFloor() + "층";
         }
         position.setText(restRoom.getBuildingName() + " " + floor + "\n" + restRoom.getPosition());
-
         TextView powderRoom = (TextView) view.findViewById(R.id.tv_powder_room);
         if (restRoom.isPowderRoom()) {
             powderRoom.setText("파우더룸");

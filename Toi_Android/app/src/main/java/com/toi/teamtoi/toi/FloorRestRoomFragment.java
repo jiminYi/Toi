@@ -18,7 +18,6 @@ public class FloorRestRoomFragment extends Fragment {
     private static final String ARG_BUILDING_NAME = "building name";
     private static final String ARG_START_FLOOR = "start floor";
     private static final String ARG_END_FLOOR = "end floor";
-
     private String buildingName;
     private int startFloor;
     private int endFloor;
