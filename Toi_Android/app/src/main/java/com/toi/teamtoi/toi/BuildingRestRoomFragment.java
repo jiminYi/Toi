@@ -22,6 +22,7 @@ import com.perples.recosdk.RECOErrorCode;
 import com.perples.recosdk.RECORangingListener;
 import com.toi.teamtoi.toi.server.PostParam;
 import com.toi.teamtoi.toi.server.BuildingRestRoomServer;
+import com.toi.teamtoi.toi.sqlite.DBHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,9 +74,23 @@ public class BuildingRestRoomFragment extends RecoFragment implements RECORangin
                 Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
             }
-        }
-        else {
-
+        } else if(url.contains("favorite")){
+            DBHelper dbHelper = new DBHelper(getContext(), "Toi.db",null,1);
+            List<String> rids = dbHelper.getResult();
+            String favoriteStr = "";
+            for(int i = 0; i < rids.size(); i++) {
+                String rid = rids.get(i);
+                if(i != 0) {
+                    favoriteStr += ", ";
+                }
+                favoriteStr += rid;
+            }
+            List<PostParam> postParams = new ArrayList<PostParam>();
+            Log.d("favorite", favoriteStr);
+            PostParam postParam = new PostParam("favorite", favoriteStr);
+            postParams.add(postParam);
+            server.getData(url, postParams);
+        } else {
             server.getData(url, new ArrayList<PostParam>());
         }
         return view;

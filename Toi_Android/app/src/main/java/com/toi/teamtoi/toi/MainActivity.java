@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case "즐겨찾기":
                 setTitle("즐겨찾기");
-                fragment = BuildingRestRoomFragment.newInstance("#");
+                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"favorite.php");
                 break;
             case "빈 화장실":
                 setTitle("빈 화장실");
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .replace(R.id.fragment_main, wholeFragment).commit();
         } else if (id == R.id.nav_favorite) {
             setTitle("즐겨찾기");
-            Fragment favoriteFragment = BuildingRestRoomFragment.newInstance("#");
+            Fragment favoriteFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"favorite.php");
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentManager.beginTransaction()
