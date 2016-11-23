@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.toi.teamtoi.toi.data.RestRoom;
 import com.toi.teamtoi.toi.server.ImageServer;
+import com.toi.teamtoi.toi.sqlite.DBHelper;
 
 import java.util.ArrayList;
 
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 public class RestRoomDetailFragment extends Fragment {
     private static final String ARG_PARAM_RESTROOM = "restroom";
     private RestRoom restRoom;
-
+    private DBHelper dbHelper;
     public RestRoomDetailFragment() {
 
     }
@@ -44,8 +46,33 @@ public class RestRoomDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rest_room_detail, container, false);
+        dbHelper = new DBHelper(getContext(), "Toi.db",null,1);
+        final Button btnFavorite=(Button) view.findViewById(R.id.btn_favorite);
+        if(dbHelper.hasRid(restRoom.getRid())){
+            btnFavorite.setText("제거");
+        }
+        else{
+            btnFavorite.setText("추가");
+        }
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnFavorite.getText().toString().contains("추가")){
+                    dbHelper.insert(restRoom.getRid());
+                    btnFavorite.setText("제거");
+                }
+                else{
+                    dbHelper.delete(restRoom.getRid());
+                    btnFavorite.setText("추가");
+                }
+            }
+        });
+
         TextView position = (TextView) view.findViewById(R.id.tv_building_and_floor);
         String floor = "";
+
+
+
         if (restRoom.getFloor() > 0) {
             floor = restRoom.getFloor() + "층";
         } else {

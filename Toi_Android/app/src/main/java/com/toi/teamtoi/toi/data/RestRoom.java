@@ -3,6 +3,7 @@ package com.toi.teamtoi.toi.data;
 import java.io.Serializable;
 
 public class RestRoom implements Serializable {
+    private String rid;
     private String buildingName;
     private String position;
     private String waitingTime;
@@ -14,7 +15,8 @@ public class RestRoom implements Serializable {
     private boolean isPowderRoom;
     private String imagePath;
 
-    public RestRoom(String buildingName, String position, String waitingTime, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom, String imagePath) {
+    public RestRoom(String rid, String buildingName, String position, String waitingTime, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom, String imagePath) {
+        this.rid=rid;
         this.buildingName = buildingName;
         this.position = position;
         this.waitingTime = waitingTime;
@@ -25,6 +27,10 @@ public class RestRoom implements Serializable {
         this.hasVendingMachine = hasVendingMachine;
         this.isPowderRoom = isPowderRoom;
         this.imagePath = imagePath;
+    }
+
+    public String getRid(){
+        return rid;
     }
 
     public String getBuildingName() {

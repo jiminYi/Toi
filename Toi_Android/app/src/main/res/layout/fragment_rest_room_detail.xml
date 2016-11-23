@@ -28,6 +28,8 @@
                 android:layout_margin="5dp"
                 android:background="#8EB4E3" />
 
+
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -55,8 +57,14 @@
                     android:gravity="center"/>
 
             </LinearLayout>
-
         </LinearLayout>
+
+        <Button
+            android:text="추가"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_favorite"
+            android:layout_gravity="right" />
 
         <ImageView
             android:layout_width="match_parent"
