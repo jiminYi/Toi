@@ -3,15 +3,11 @@ package com.toi.teamtoi.toi;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
+import android.os.*;
+import android.support.v4.app.*;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,9 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
-
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String KEY_FIRST = "first";
@@ -37,8 +30,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         SharedPreferences prefs = getSharedPreferences("Personal", MODE_PRIVATE);
         String first = "전체 화장실";
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editor.putString(MainActivity.KEY_FIRST, first);
             editor.commit();
         }
-
         Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
         switch (first) {
             case "전체 화장실":
@@ -88,15 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("MainActivity", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is already granted.");
             }
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -124,54 +114,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");;
         if (id == R.id.nav_whole) {
-            Fragment wholeFragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_main, wholeFragment).commit();
+            fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
         } else if (id == R.id.nav_favorite) {
             setTitle("즐겨찾기");
-            Fragment favoriteFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"favorite.php");
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_main, favoriteFragment).commit();
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"favorite.php");
         } else if (id == R.id.nav_empty) {
             setTitle("빈 화장실");
-            Fragment emptyFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_main, emptyFragment).commit();
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
         } else if (id == R.id.nav_near) {
             setTitle("가까운 화장실");
-            Fragment nearFragment = NearRestRoomFragment.newInstance(SERVER_ADDR+"near.php");
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_main, nearFragment).commit();
+            fragment = NearRestRoomFragment.newInstance(SERVER_ADDR+"near.php");
         } else if (id == R.id.nav_powder_room) {
             setTitle("파우더룸");
-            Fragment powderRoomFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_main, powderRoomFragment).commit();
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
         } else if (id == R.id.nav_vending_machine) {
             setTitle("자판기");
-            Fragment vendingMachineFragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_main, vendingMachineFragment).commit();
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
         } else if (id == R.id.nav_setting) {
-            Fragment settingFragment = SettingFragment.newInstance();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_main, settingFragment).commit();
+            fragment = SettingFragment.newInstance();
         }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.beginTransaction().replace(R.id.fragment_main, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

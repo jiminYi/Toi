@@ -43,9 +43,6 @@ public class BuildingRestRoomServer {
     private static final String TAG_POWDER_ROOM = "powder_room";
     private static final String TAG_IMAGE = "image";
     private String json;
-    private JSONArray buildings = null;
-    private JSONArray restRooms = null;
-    private ArrayList<RestRoom> restRoomList;
     private Context context;
     private FragmentActivity fragmentActivity;
     private LinearLayout linearLayout;
@@ -147,7 +144,7 @@ public class BuildingRestRoomServer {
                     Log.d("server", restRoom.toString());
                     restRoomList.add(restRoom);
                 }
-                RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRoomList, fragmentActivity);
+                RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRoomList);
                 lvRestRoom.setAdapter(restRoomAdapter1);
                 lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

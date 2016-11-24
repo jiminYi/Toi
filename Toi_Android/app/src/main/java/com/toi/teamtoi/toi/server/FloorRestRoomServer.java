@@ -155,7 +155,7 @@ public class FloorRestRoomServer {
                 final Button mButton = new Button(fragmentActivity);
                 final ListView lvRestRoom = new ListView(fragmentActivity);
                 final List<RestRoom> restRooms = map.get(String.valueOf(i));
-                RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRooms, fragmentActivity);
+                RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRooms);
                 lvRestRoom.setAdapter(restRoomAdapter1);
                 lvRestRoom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

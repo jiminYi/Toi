@@ -28,16 +28,13 @@ public class ImageServer {
                     HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
                     conn.setDoInput(true);
                     conn.connect();
-
                     InputStream is = conn.getInputStream();
-
                     bitmap = BitmapFactory.decodeStream(is);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 return bitmap;
             }
-
             protected void onPostExecute(Bitmap bitmap) {
                 imageView.setImageBitmap(bitmap);
             }

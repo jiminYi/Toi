@@ -1,7 +1,5 @@
 package com.toi.teamtoi.toi;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,9 +13,6 @@ import android.widget.TextView;
 import com.toi.teamtoi.toi.data.RestRoom;
 import com.toi.teamtoi.toi.server.ImageServer;
 import com.toi.teamtoi.toi.sqlite.DBHelper;
-
-import java.util.ArrayList;
-
 
 public class RestRoomDetailFragment extends Fragment {
     private static final String ARG_PARAM_RESTROOM = "restroom";

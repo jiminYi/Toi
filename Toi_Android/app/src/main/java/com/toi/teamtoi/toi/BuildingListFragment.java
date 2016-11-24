@@ -7,14 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.toi.teamtoi.toi.adapter.CampusAdapter;
-import com.toi.teamtoi.toi.data.Building;
-import com.toi.teamtoi.toi.data.Campus;
 import com.toi.teamtoi.toi.server.CampusBuildingServer;
 import com.toi.teamtoi.toi.server.PostParam;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BuildingListFragment extends Fragment {
     private static final String ARG_PARAM_URL = "arg_param_url";

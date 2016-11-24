@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.toi.teamtoi.toi.R;
@@ -14,26 +13,24 @@ import com.toi.teamtoi.toi.data.Building;
 import java.util.List;
 
 public class BuildingAdapter  extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private List<Building> mItemList;
-    private int mLayout;
+    private LayoutInflater inflater;
+    private List<Building> buildingList;
+    private int layout;
 
-    public BuildingAdapter(Context context, int layout, List<Building> itemList) {
-        this.mContext = context;
-        this.mLayout = layout;
-        this.mItemList = itemList;
-        this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public BuildingAdapter(Context context, int layout, List<Building> buildingList) {
+        this.layout = layout;
+        this.buildingList = buildingList;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return mItemList.size();
+        return buildingList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mItemList.get(position);
+        return buildingList.get(position);
     }
 
     @Override
@@ -45,7 +42,7 @@ public class BuildingAdapter  extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         BuildingViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(mLayout, parent, false);
+            convertView = inflater.inflate(layout, parent, false);
 
             viewHolder = new BuildingViewHolder();
             viewHolder.buildingName = (TextView) convertView.findViewById(R.id.tv_building_name);
@@ -55,7 +52,7 @@ public class BuildingAdapter  extends BaseAdapter {
             viewHolder = (BuildingViewHolder) convertView.getTag();
         }
 
-        viewHolder.buildingName.setText(mItemList.get(position).getName());
+        viewHolder.buildingName.setText(buildingList.get(position).getName());
 
         return convertView;
     }

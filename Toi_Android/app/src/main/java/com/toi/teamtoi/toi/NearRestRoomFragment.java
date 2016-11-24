@@ -33,7 +33,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("RECORangingActivity", "onCreate");
+        Log.d("NearRestRoomFragment", "onCreate");
         if (getArguments() != null) {
             url = getArguments().getString(ARG_PARAM_URL);
         }
@@ -42,7 +42,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_building_rest_room, container, false);
-        Log.d("RECORangingActivity", "onCreateView");
+        Log.d("NearRestRoomFragment", "onCreateView");
         mRecoManager.setRangingListener(this);
         mRecoManager.bind(this);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.building_rest_room_layout);
@@ -68,7 +68,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
         try {
             mRecoManager.unbind();
         } catch (RemoteException e) {
-            Log.i("RECORangingActivity", "Remote Exception");
+            Log.i("NearRestRoomFragment", "Remote Exception");
             e.printStackTrace();
         }
     }
@@ -89,7 +89,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
     @Override
     public void didRangeBeaconsInRegion(Collection<RECOBeacon> recoBeacons, RECOBeaconRegion recoRegion) {
         ArrayList<RECOBeacon> beaconArrayList = new ArrayList<RECOBeacon>(recoBeacons);
-        Log.i("RECORangingActivity", "didRangeBeaconsInRegion() region: " + recoRegion.getUniqueIdentifier() + ", number of beacons ranged: " + recoBeacons.size());
+        Log.i("NearRestRoomFragment", "didRangeBeaconsInRegion() region: " + recoRegion.getUniqueIdentifier() + ", number of beacons ranged: " + recoBeacons.size());
         if(minBeacon == null) {
             if (beaconArrayList.size() > 0) {
                 minBeacon = beaconArrayList.get(0);
@@ -98,7 +98,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
                     if (beaconArrayList.get(i).getAccuracy() <= minBeacon.getAccuracy())
                         minBeacon = beaconArrayList.get(i);
                 }
-                Log.d("beacon", "major = " + minBeacon.getMajor() + ", minor = " + minBeacon.getMinor());
+                Log.d("NearRestRoomFragment", "major = " + minBeacon.getMajor() + ", minor = " + minBeacon.getMinor());
                 List<PostParam> postParams = new ArrayList<PostParam>();
                 PostParam major = new PostParam("major", minBeacon.getMajor() + "");
                 postParams.add(major);
@@ -113,7 +113,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
 
     @Override
     public void rangingBeaconsDidFailForRegion(RECOBeaconRegion recoBeaconRegion, RECOErrorCode errorCode) {
-        Log.i("RECORangingActivity", "error code = " + errorCode);
+        Log.i("NearRestRoomFragment", "error code = " + errorCode);
         return;
     }
 
@@ -123,10 +123,10 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
             try {
                 mRecoManager.startRangingBeaconsInRegion(region);
             } catch (RemoteException e) {
-                Log.i("RECORangingActivity", "Remote Exception");
+                Log.i("NearRestRoomFragment", "Remote Exception");
                 e.printStackTrace();
             } catch (NullPointerException e) {
-                Log.i("RECORangingActivity", "Null Pointer Exception");
+                Log.i("NearRestRoomFragment", "Null Pointer Exception");
                 e.printStackTrace();
             }
         }
@@ -138,10 +138,10 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
             try {
                 mRecoManager.stopRangingBeaconsInRegion(region);
             } catch (RemoteException e) {
-                Log.i("RECORangingActivity", "Remote Exception");
+                Log.i("NearRestRoomFragment", "Remote Exception");
                 e.printStackTrace();
             } catch (NullPointerException e) {
-                Log.i("RECORangingActivity", "Null Pointer Exception");
+                Log.i("NearRestRoomFragment", "Null Pointer Exception");
                 e.printStackTrace();
             }
         }
@@ -149,7 +149,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
 
     @Override
     public void onServiceConnect() {
-        Log.i("RECORangingActivity", "onServiceConnect()");
+        Log.i("NearRestRoomFragment", "onServiceConnect()");
         mRecoManager.setDiscontinuousScan(MainActivity.DISCONTINUOUS_SCAN);
         this.start(mRegions);
     }

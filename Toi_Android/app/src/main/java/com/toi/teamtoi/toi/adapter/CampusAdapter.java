@@ -22,28 +22,28 @@ import com.toi.teamtoi.toi.data.Campus;
 import java.util.List;
 
 public class CampusAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private List<Campus> mItemList;
-    private int mLayout;
+    private Context context;
+    private LayoutInflater inflater;
+    private List<Campus> campusList;
+    private int layout;
     private FragmentActivity fragmentActivity;
 
-    public CampusAdapter(Context context, int layout, List<Campus> itemList, FragmentActivity fragmentActivity) {
-        this.mContext = context;
-        this.mLayout = layout;
-        this.mItemList = itemList;
-        this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public CampusAdapter(Context context, int layout, List<Campus> campusList, FragmentActivity fragmentActivity) {
+        this.context = context;
+        this.layout = layout;
+        this.campusList = campusList;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.fragmentActivity = fragmentActivity;
     }
 
     @Override
     public int getCount() {
-        return mItemList.size();
+        return campusList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mItemList.get(position);
+        return campusList.get(position);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CampusAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         CampusViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(mLayout, parent, false);
+            convertView = inflater.inflate(layout, parent, false);
 
             viewHolder = new CampusViewHolder();
             viewHolder.campusName = (TextView) convertView.findViewById(R.id.tv_campus_name);
@@ -66,13 +66,13 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder = (CampusViewHolder) convertView.getTag();
         }
 
-        viewHolder.campusName.setText(mItemList.get(position).getName());
-        final List<Building> buildings = mItemList.get(position).getBuildings();
-        BuildingAdapter buildingAdapter = new BuildingAdapter(mContext, R.layout.building_item, buildings);
+        viewHolder.campusName.setText(campusList.get(position).getName());
+        final List<Building> buildings = campusList.get(position).getBuildings();
+        BuildingAdapter buildingAdapter = new BuildingAdapter(context, R.layout.building_item, buildings);
         viewHolder.lvBuilding.setAdapter(buildingAdapter);
         ViewGroup.LayoutParams params = viewHolder.lvBuilding.getLayoutParams();
-        Resources r = mContext.getResources();
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 51 * mItemList.get(position).getBuildings().size(), r.getDisplayMetrics());
+        Resources r = context.getResources();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 51 * campusList.get(position).getBuildings().size(), r.getDisplayMetrics());
         params.height = (int) px;
         viewHolder.lvBuilding.setLayoutParams(params);
         viewHolder.lvBuilding.setOnItemClickListener(new AdapterView.OnItemClickListener() {

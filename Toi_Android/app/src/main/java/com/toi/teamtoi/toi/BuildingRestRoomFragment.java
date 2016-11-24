@@ -1,31 +1,17 @@
 package com.toi.teamtoi.toi;
 
-import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-
-import com.perples.recosdk.RECOBeacon;
-import com.perples.recosdk.RECOBeaconRegion;
-import com.perples.recosdk.RECOErrorCode;
-import com.perples.recosdk.RECORangingListener;
 import com.toi.teamtoi.toi.server.PostParam;
 import com.toi.teamtoi.toi.server.BuildingRestRoomServer;
 import com.toi.teamtoi.toi.sqlite.DBHelper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class BuildingRestRoomFragment extends Fragment {
