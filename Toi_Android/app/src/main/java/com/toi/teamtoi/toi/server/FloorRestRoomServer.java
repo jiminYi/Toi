@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -56,6 +57,7 @@ public class FloorRestRoomServer {
     private Context context;
     private FragmentActivity fragmentActivity;
     private LinearLayout linearLayout;
+    private static String btnStatus = "down";
 
     public FloorRestRoomServer(int startFloor, int endFloor, Context context, FragmentActivity fragmentActivity, LinearLayout linearLayout) {
         this.startFloor = startFloor;
@@ -150,9 +152,12 @@ public class FloorRestRoomServer {
             if(i != 0) {
                 final LinearLayout subLayout = new LinearLayout(fragmentActivity);
                 subLayout.setOrientation(LinearLayout.VERTICAL);
-                FrameLayout.LayoutParams pm = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                FrameLayout.LayoutParams pm = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 200);
                 pm.gravity = Gravity.CENTER;
-                final Button mButton = new Button(fragmentActivity);
+                final Button btnFloor = new Button(fragmentActivity);
+                btnFloor.setBackgroundResource(R.drawable.down);
+                btnFloor.setPadding(100, 0, 0, 0);
+                btnFloor.setGravity(Gravity.CENTER_VERTICAL);
                 final ListView lvRestRoom = new ListView(fragmentActivity);
                 final List<RestRoom> restRooms = map.get(String.valueOf(i));
                 RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRooms);
@@ -173,22 +178,24 @@ public class FloorRestRoomServer {
                 } else {
                     floorStr = i + "층";
                 }
-                mButton.setText(floorStr + "(펼치기)");
-                mButton.setLayoutParams(pm);
-                mButton.setOnClickListener(new View.OnClickListener() {
+                btnFloor.setText(floorStr);
+                btnFloor.setLayoutParams(pm);
+                btnFloor.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mButton.getText().toString().contains("펼치기")) {
+                        if (btnStatus.contains("down")) {
                             lvRestRoom.setVisibility(View.VISIBLE);
-                            mButton.setText(floorStr + "(숨기기)");
+                            btnFloor.setBackgroundResource(R.drawable.up);
+                            btnStatus = "up";
                         } else {
                             lvRestRoom.setVisibility(View.GONE);
-                            mButton.setText(floorStr + "(펼치기)");
+                            btnFloor.setBackgroundResource(R.drawable.down);
+                            btnStatus = "down";
                         }
                     }
                 });
                 lvRestRoom.setVisibility(View.GONE);
-                subLayout.addView(mButton);
+                subLayout.addView(btnFloor);
                 subLayout.addView(lvRestRoom);
                 linearLayout.addView(subLayout);
             }

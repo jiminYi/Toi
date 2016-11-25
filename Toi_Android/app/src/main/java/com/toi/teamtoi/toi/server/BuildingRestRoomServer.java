@@ -46,6 +46,7 @@ public class BuildingRestRoomServer {
     private Context context;
     private FragmentActivity fragmentActivity;
     private LinearLayout linearLayout;
+    private static String btnStatus = "down";
 
     public BuildingRestRoomServer(Context context, FragmentActivity fragmentActivity, LinearLayout linearLayout) {
         this.context = context;
@@ -108,21 +109,26 @@ public class BuildingRestRoomServer {
                 final String buildingName = (String)keys.next();
                 final LinearLayout subLayout = new LinearLayout(fragmentActivity);
                 subLayout.setOrientation(LinearLayout.VERTICAL);
-                FrameLayout.LayoutParams pm = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                FrameLayout.LayoutParams pm = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 200);
                 pm.gravity = Gravity.CENTER;
                 final Button btnBuilding = new Button(context);
+                btnBuilding.setBackgroundResource(R.drawable.down);
+                btnBuilding.setPadding(100, 0, 0, 0);
+                btnBuilding.setGravity(Gravity.CENTER_VERTICAL);
                 final ListView lvRestRoom = new ListView(context);
-                btnBuilding.setText(buildingName + "(펼치기)");
+                btnBuilding.setLayoutParams(pm);
+                btnBuilding.setText(buildingName);
                 btnBuilding.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(fragmentActivity, "건물: " + buildingName, Toast.LENGTH_SHORT).show();
-                        if (btnBuilding.getText().toString().contains("펼치기")) {
+                        if (btnStatus.contains("down")) {
                             lvRestRoom.setVisibility(View.VISIBLE);
-                            btnBuilding.setText(buildingName + "(숨기기)");
+                            btnBuilding.setBackgroundResource(R.drawable.up);
+                            btnStatus = "up";
                         } else {
                             lvRestRoom.setVisibility(View.GONE);
-                            btnBuilding.setText(buildingName + "(펼치기)");
+                            btnBuilding.setBackgroundResource(R.drawable.down);
+                            btnStatus = "down";
                         }
                     }
                 });
