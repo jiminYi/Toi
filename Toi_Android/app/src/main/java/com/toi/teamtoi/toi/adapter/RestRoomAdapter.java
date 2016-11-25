@@ -59,7 +59,7 @@ public class RestRoomAdapter extends BaseAdapter {
         }
 
         viewHolder.position.setText(itemList.get(position).getPosition());
-        viewHolder.emptySpace.setText(itemList.get(position).getNumOfEmptySpace() + "/" + itemList.get(position).getNumOfSpace());
+        viewHolder.emptySpace.setText((itemList.get(position).getNumOfSpace() - itemList.get(position).getNumOfEmptySpace()) + "/" + itemList.get(position).getNumOfSpace());
         viewHolder.waitingTime.setText("대기시간: " + itemList.get(position).getWaitingTime());
 
         return convertView;

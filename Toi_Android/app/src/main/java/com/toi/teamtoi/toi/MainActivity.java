@@ -16,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.toi.teamtoi.toi.util.NetworkUtil;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String KEY_FIRST = "first";
@@ -31,60 +34,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        int conn = NetworkUtil.getConnectivityStatus(getApplicationContext());
+        if (conn == NetworkUtil.TYPE_NOT_CONNECTED) {
+            Toast.makeText(getApplicationContext(), "네트워크에 연결을 해주세요.", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
 
-        SharedPreferences prefs = getSharedPreferences("Personal", MODE_PRIVATE);
-        String first = "전체 화장실";
-        try {
-            first = prefs.getString(KEY_FIRST, "");
-        } catch (Exception e) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(MainActivity.KEY_FIRST, first);
-            editor.commit();
-        }
-        Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
-        switch (first) {
-            case "전체 화장실":
-                fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
-                break;
-            case "즐겨찾기":
-                setTitle("즐겨찾기");
-                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"favorite.php");
-                break;
-            case "빈 화장실":
-                setTitle("빈 화장실");
-                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
-                break;
-            case "가까운 화장실":
-                setTitle("가까운 화장실");
-                fragment = NearRestRoomFragment.newInstance(SERVER_ADDR +"near.php");
-                break;
-            case "파우더룸":
-                setTitle("파우더룸");
-                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
-                break;
-            case "자판기":
-                setTitle("자판기");
-                fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
-                break;
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        fragmentManager.beginTransaction().replace(R.id.fragment_main, fragment).commit();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.i("MainActivity", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is not granted.");
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
-            } else {
-                Log.i("MainActivity", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is already granted.");
+            SharedPreferences prefs = getSharedPreferences("Personal", MODE_PRIVATE);
+            String first = "전체 화장실";
+            try {
+                first = prefs.getString(KEY_FIRST, "");
+            } catch (Exception e) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(MainActivity.KEY_FIRST, first);
+                editor.commit();
+            }
+            Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
+            switch (first) {
+                case "전체 화장실":
+                    fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
+                    break;
+                case "즐겨찾기":
+                    setTitle("즐겨찾기");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "favorite.php");
+                    break;
+                case "빈 화장실":
+                    setTitle("빈 화장실");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
+                    break;
+                case "가까운 화장실":
+                    setTitle("가까운 화장실");
+                    fragment = NearRestRoomFragment.newInstance(SERVER_ADDR + "near.php");
+                    break;
+                case "파우더룸":
+                    setTitle("파우더룸");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
+                    break;
+                case "자판기":
+                    setTitle("자판기");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
+                    break;
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fragmentManager.beginTransaction().replace(R.id.fragment_main, fragment).commit();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is not granted.");
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+                } else {
+                    Log.i("MainActivity", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is already granted.");
+                }
             }
         }
     }
