@@ -1,6 +1,7 @@
 package com.toi.teamtoi.toi.server;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -179,6 +180,7 @@ public class FloorRestRoomServer {
                     floorStr = i + "층";
                 }
                 btnFloor.setText(floorStr);
+                btnFloor.setTextColor(Color.BLACK);
                 btnFloor.setLayoutParams(pm);
                 btnFloor.setOnClickListener(new View.OnClickListener() {
                     @Override
