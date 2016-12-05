@@ -20,7 +20,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="left|center_vertical"
-                android:background="#ffffff"
                 android:text="전체 화장실"
                 android:id="@+id/first_whole" />
 
@@ -28,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="left|center_vertical"
-                android:background="#ffffff"
                 android:text="즐겨찾기"
                 android:id="@+id/first_favorite" />
 
@@ -36,7 +34,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="left|center_vertical"
-                android:background="#ffffff"
                 android:text="빈 화장실"
                 android:id="@+id/first_empty" />
 
@@ -44,7 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="left|center_vertical"
-                android:background="#ffffff"
                 android:text="가까운 화장실"
                 android:id="@+id/first_near" />
 
@@ -52,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="left|center_vertical"
-                android:background="#ffffff"
                 android:text="파우더룸"
                 android:id="@+id/first_powder_room" />
 
@@ -60,7 +55,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="left|center_vertical"
-                android:background="#ffffff"
                 android:text="자판기"
                 android:id="@+id/first_vending_machine" />
         </RadioGroup>
@@ -78,7 +72,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="설정"
-                android:background="#ffffff"
+                android:textSize="20dp"
+                android:background="#114A91"
+                android:textColor="#ffffff"
                 android:id="@+id/btn_ok"
                 android:layout_gravity="center_horizontal" />
 

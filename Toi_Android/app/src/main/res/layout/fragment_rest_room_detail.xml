@@ -60,9 +60,10 @@
         </LinearLayout>
 
         <Button
-            android:text="추가"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/favorite_add"
             android:id="@+id/btn_favorite"
             android:layout_gravity="right" />
 

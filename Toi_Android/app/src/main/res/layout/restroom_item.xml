@@ -17,6 +17,26 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:textColor="#303F9F"
+            android:textSize="18dp"
+            android:text="3층"
+            android:id="@+id/tv_floor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:textColor="#000000"
             android:text="명신 앞"
             android:id="@+id/tv_position" />

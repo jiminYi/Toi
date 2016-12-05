@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.toi.teamtoi.toi.data.RestRoom;
 import com.toi.teamtoi.toi.server.ImageServer;
@@ -18,6 +19,7 @@ public class RestRoomDetailFragment extends Fragment {
     private static final String ARG_PARAM_RESTROOM = "restroom";
     private RestRoom restRoom;
     private DBHelper dbHelper;
+    private boolean favorite = false;
 
     public RestRoomDetailFragment() {
 
@@ -46,21 +48,27 @@ public class RestRoomDetailFragment extends Fragment {
         dbHelper = new DBHelper(getContext(), "Toi.db",null,1);
         final Button btnFavorite=(Button) view.findViewById(R.id.btn_favorite);
         if(dbHelper.hasRid(restRoom.getRid())){
-            btnFavorite.setText("제거");
+            favorite = true;
+            btnFavorite.setBackgroundResource(R.drawable.favorite_remove);
         }
         else{
-            btnFavorite.setText("추가");
+            favorite = false;
+            btnFavorite.setBackgroundResource(R.drawable.favorite_add);
         }
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(btnFavorite.getText().toString().contains("추가")){
+                if(!favorite){
                     dbHelper.insert(restRoom.getRid());
-                    btnFavorite.setText("제거");
+                    favorite = true;
+                    btnFavorite.setBackgroundResource(R.drawable.favorite_remove);
+                    Toast.makeText(getContext(), "즐겨찾기에 추가되었습니다", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     dbHelper.delete(restRoom.getRid());
-                    btnFavorite.setText("추가");
+                    favorite = false;
+                    btnFavorite.setBackgroundResource(R.drawable.favorite_add);
+                    Toast.makeText(getContext(), "즐겨찾기에서 제거되었습니다", Toast.LENGTH_SHORT).show();
                 }
                 Log.d("favorite", "count = " + dbHelper.getResult().size());
             }

@@ -1,0 +1,99 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.toi.teamtoi.toi.Q2Fragment">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:background="#000000"
+                android:paddingBottom="1dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:padding="15dp"
+                    android:text="Q3. 화장실 별칭은 어떻게 정해진것 인가요?"
+                    android:textColor="#000000"
+                    android:id="@+id/tv_q2" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:id="@+id/iv_help2_1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:padding="15dp"
+                android:text=" - 위의 빨간 별표 위치의 화장실은 '명신관앞'이라는 별칭을 갖습니다."
+                android:textColor="#000000"
+                android:id="@+id/tv_answer2_1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/iv_help2_2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:padding="15dp"
+                android:text=" - 위의 빨간 별표 위치의 화장실은 '명신관뒤'이라는 별칭을 갖습니다."
+                android:textColor="#000000"
+                android:id="@+id/tv_answer2_2" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/iv_help2_3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:padding="15dp"
+                android:text=" - 위의 빨간 별표 위치의 화장실은 '새힘맞은편'이라는 별칭을 갖습니다."
+                android:textColor="#000000"
+                android:id="@+id/tv_answer2_3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/iv_help2_4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:padding="15dp"
+                android:text=" - 위의 빨간 별표 위치의 화장실은 '새힘관'이라는 별칭을 갖습니다."
+                android:textColor="#000000"
+                android:id="@+id/tv_answer2_4" />
+
+
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>

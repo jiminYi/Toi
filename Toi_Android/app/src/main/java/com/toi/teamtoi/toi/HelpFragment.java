@@ -32,7 +32,51 @@ public class HelpFragment extends Fragment {
         q1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment helpFragment = Q1Fragment.newInstance();
+                Fragment helpFragment = Q1Fragment.newInstance("q1");
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_main, helpFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        Button q2 = (Button) view.findViewById(R.id.help_q2);
+        q2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment helpFragment = Q1Fragment.newInstance("q2");
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_main, helpFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        Button q3 = (Button) view.findViewById(R.id.help_q3);
+        q3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment helpFragment = Q2Fragment.newInstance("q3");
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_main, helpFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        Button q4 = (Button) view.findViewById(R.id.help_q4);
+        q4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment helpFragment = Q2Fragment.newInstance("q4");
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_main, helpFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        Button q5  = (Button) view.findViewById(R.id.help_q5);
+        q5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment helpFragment = Q1Fragment.newInstance("q5");
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_main, helpFragment);
                 transaction.addToBackStack(null);

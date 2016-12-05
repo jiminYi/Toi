@@ -16,6 +16,7 @@
             android:background="#ffffff"
             android:gravity="left|center_vertical"
             android:text="Q1. 화장실 위치는 어떻게 찾나요?"
+            android:layout_marginBottom="1dp"
             android:id="@+id/help_q1" />
 
         <Button
@@ -24,9 +25,39 @@
             android:paddingLeft="15dp"
             android:background="#ffffff"
             android:gravity="left|center_vertical"
-            android:text="Q2. 즐겨찾기 기능은 어떻게 사용하나요?"
+            android:text="Q2. 화장실 리스트의 정보는 무엇을 의미하나요?"
+            android:layout_marginBottom="1dp"
             android:id="@+id/help_q2" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:background="#ffffff"
+            android:gravity="left|center_vertical"
+            android:text="Q3. 화장실 별칭은 어떻게 정해진것 인가요?"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/help_q3" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:background="#ffffff"
+            android:gravity="left|center_vertical"
+            android:text="Q4. 즐겨찾기 기능은 어떻게 사용하나요?"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/help_q4" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:background="#ffffff"
+            android:gravity="left|center_vertical"
+            android:text="Q5. 가까운 화장실 기능은 어떻게 사용하나요?"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/help_q5" />
     </LinearLayout>
 
 </FrameLayout>

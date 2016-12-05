@@ -25,7 +25,7 @@
                 android:padding="15dp"
                 android:text="Q1. 화장실 위치는 어떻게 찾나요"
                 android:textColor="#000000"
-                android:id="@+id/textView2" />
+                android:id="@+id/tv_q" />
 
         </LinearLayout>
 
@@ -34,15 +34,14 @@
             android:layout_height="wrap_content"
             android:background="#ffffff"
             android:padding="15dp"
-            android:text="화장실 위치는 리스트에서 화장실을 클리하면 더 자세한 정보를 얻을 수 있습니다."
+            android:text="화장실 위치는 리스트에서 화장실을 클릭하면 건물 단면 기준으로, 지도에서 확인하실 수 있습니다.(아래 예시 이미지)"
             android:textColor="#000000"
-            android:id="@+id/textView3" />
+            android:id="@+id/tv_answer" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/q1_test"
-            android:id="@+id/imageView2" />
+            android:layout_height="match_parent"
+            android:id="@+id/iv_help1" />
 
 
     </LinearLayout>

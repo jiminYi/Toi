@@ -49,6 +49,7 @@ public class RestRoomAdapter extends BaseAdapter {
             convertView = inflater.inflate(layout, parent, false);
 
             viewHolder = new CampusViewHolder();
+            viewHolder.floor = (TextView) convertView.findViewById(R.id.tv_floor);
             viewHolder.position = (TextView) convertView.findViewById(R.id.tv_position);
             viewHolder.emptySpace = (TextView) convertView.findViewById(R.id.tv_empty_space);
             viewHolder.waitingTime = (TextView) convertView.findViewById(R.id.tv_waiting_time);
@@ -58,6 +59,13 @@ public class RestRoomAdapter extends BaseAdapter {
             viewHolder = (CampusViewHolder) convertView.getTag();
         }
 
+        String floorStr = "";
+        if(itemList.get(position).getFloor() > 0) {
+            floorStr += itemList.get(position).getFloor() + "층";
+        } else {
+            floorStr += "B" + -itemList.get(position).getFloor() + "층";
+        }
+        viewHolder.floor.setText(floorStr);
         viewHolder.position.setText(itemList.get(position).getPosition());
         viewHolder.emptySpace.setText((itemList.get(position).getNumOfSpace() - itemList.get(position).getNumOfEmptySpace()) + "/" + itemList.get(position).getNumOfSpace());
         viewHolder.waitingTime.setText("대기시간: " + itemList.get(position).getWaitingTime());
@@ -66,6 +74,7 @@ public class RestRoomAdapter extends BaseAdapter {
     }
 
     public class CampusViewHolder {
+        public TextView floor;
         public TextView position;
         public TextView emptySpace;
         public TextView waitingTime;
