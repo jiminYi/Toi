@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final boolean ENABLE_BACKGROUND_RANGING_TIMEOUT = true;
     public static final boolean DISCONTINUOUS_SCAN = false;
     private static final int REQUEST_LOCATION = 10;
+    private Fragment fragment;
+    public static MenuItem refreshMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +60,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 editor.putString(MainActivity.KEY_FIRST, first);
                 editor.commit();
             }
-            Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
+            fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
             switch (first) {
                 case "전체 화장실":
                     fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
                     break;
                 case "즐겨찾기":
                     setTitle("즐겨찾기");
-                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "favorite.php");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "favorite.php", "즐겨찾기");
                     break;
                 case "빈 화장실":
                     setTitle("빈 화장실");
-                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php", "빈 화장실");
                     break;
                 case "가까운 화장실":
                     setTitle("가까운 화장실");
@@ -77,11 +79,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case "파우더룸":
                     setTitle("파우더룸");
-                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php", "파우더룸");
                     break;
                 case "자판기":
                     setTitle("자판기");
-                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
+                    fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php", "자판기");
                     break;
             }
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -112,11 +114,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        refreshMenu = menu.findItem(R.id.action_refresh);
+        refreshMenu.setEnabled(false);
+        refreshMenu.setVisible(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.action_refresh:
+                if(fragment != null && getTitle().toString().contains("화장실 선택")) {
+                    FloorRestRoomFragment.getInstance().refresh();
+                } else {
+                    Toast.makeText(getApplicationContext(), getTitle(), Toast.LENGTH_SHORT).show();
+                }
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -124,24 +139,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        Fragment fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");;
+        fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");;
         if (id == R.id.nav_whole) {
             fragment = BuildingListFragment.newInstance(SERVER_ADDR + "campus_building.php");
         } else if (id == R.id.nav_favorite) {
             setTitle("즐겨찾기");
-            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"favorite.php");
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR+"favorite.php", "즐겨찾기");
         } else if (id == R.id.nav_empty) {
             setTitle("빈 화장실");
-            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php");
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "empty.php", "빈 화장실");
         } else if (id == R.id.nav_near) {
             setTitle("가까운 화장실");
             fragment = NearRestRoomFragment.newInstance(SERVER_ADDR+"near.php");
         } else if (id == R.id.nav_powder_room) {
             setTitle("파우더룸");
-            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php");
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "powder_room.php", "파우더룸");
         } else if (id == R.id.nav_vending_machine) {
             setTitle("자판기");
-            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php");
+            fragment = BuildingRestRoomFragment.newInstance(SERVER_ADDR + "vending_machine.php", "자판기");
         } else if (id == R.id.nav_setting) {
             fragment = SettingFragment.newInstance();
         }

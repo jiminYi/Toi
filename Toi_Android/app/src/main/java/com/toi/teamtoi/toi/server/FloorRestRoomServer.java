@@ -138,7 +138,7 @@ public class FloorRestRoomServer {
                     boolean hasVendingMachine = c.getInt(TAG_VENDING_MACHINE) > 0 ? true : false;
                     boolean isPowderRoom = c.getInt(TAG_POWDER_ROOM) > 0 ? true : false;
                     String imagePath = c.getString(TAG_IMAGE);
-                    RestRoom restRoom = new RestRoom(rid, buildingName, position, waitingTime, Integer.parseInt(floor), maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
+                    RestRoom restRoom = new RestRoom(context, rid, buildingName, position, waitingTime, Integer.parseInt(floor), maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
                     restRoomList.add(restRoom);
                 }
                 map.put(floor, restRoomList);

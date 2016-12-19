@@ -1,5 +1,11 @@
 package com.toi.teamtoi.toi.data;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+
+import com.toi.teamtoi.toi.R;
+
 import java.io.Serializable;
 
 public class RestRoom implements Serializable {
@@ -15,7 +21,7 @@ public class RestRoom implements Serializable {
     private boolean isPowderRoom;
     private String imagePath;
 
-    public RestRoom(String rid, String buildingName, String position, String waitingTime, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom, String imagePath) {
+    public RestRoom(Context context, String rid, String buildingName, String position, String waitingTime, int floor, int maxNumOfPeople, int numOfSpace, int numOfEmptySpace, boolean hasVendingMachine, boolean isPowderRoom, String imagePath) {
         this.rid=rid;
         this.buildingName = buildingName;
         this.position = position;
@@ -68,7 +74,7 @@ public class RestRoom implements Serializable {
     public int getNumOfEmptySpace() {
         return  numOfEmptySpace;
     }
-
+;
     public String getImagePath() {
         return imagePath;
     }

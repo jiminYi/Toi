@@ -31,7 +31,6 @@ public class BuildingListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("전체 화장실 - 건물 선택");
         if (getArguments() != null) {
             url = getArguments().getString(ARG_PARAM_URL);
         }
@@ -40,6 +39,11 @@ public class BuildingListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_building_list, container, false);
+        getActivity().setTitle("전체 화장실 - 건물 선택");
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
         ListView lv_campus = (ListView) view.findViewById(R.id.lv_campus);
         CampusBuildingServer server = new CampusBuildingServer(getContext(), getActivity(), lv_campus);
         server.getData(url, new ArrayList<PostParam>());

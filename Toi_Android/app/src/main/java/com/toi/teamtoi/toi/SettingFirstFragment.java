@@ -35,6 +35,10 @@ public class SettingFirstFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting_first, container, false);
         getActivity().setTitle("첫 화면 설정");
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.rg_first);
         SharedPreferences prefs = getActivity().getSharedPreferences("Personal", getActivity().MODE_PRIVATE);
         first = prefs.getString(MainActivity.KEY_FIRST, "");

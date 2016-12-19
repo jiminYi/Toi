@@ -36,7 +36,6 @@ public class RestRoomDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(getActivity().getTitle().toString().split("-")[0] + "- 화장실 세부정보");
         if (getArguments() != null) {
             restRoom = (RestRoom) getArguments().get(ARG_PARAM_RESTROOM);
         }
@@ -45,6 +44,11 @@ public class RestRoomDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rest_room_detail, container, false);
+        getActivity().setTitle(getActivity().getTitle().toString().split("-")[0] + "- 화장실 세부정보");
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
         dbHelper = new DBHelper(getContext(), "Toi.db",null,1);
         final Button btnFavorite=(Button) view.findViewById(R.id.btn_favorite);
         if(dbHelper.hasRid(restRoom.getRid())){

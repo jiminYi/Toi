@@ -3,22 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.toi.teamtoi.toi.FloorRestRoomFragment">
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/floor_rest_room_layout">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#dddddd"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:padding="5dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/tv_floor_rest_room_title" />
     </LinearLayout>
 </FrameLayout>

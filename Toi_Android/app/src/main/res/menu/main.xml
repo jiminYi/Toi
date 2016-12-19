@@ -6,4 +6,11 @@
         <!--android:orderInCategory="100"-->
         <!--android:title="@string/action_settings"-->
         <!--app:showAsAction="never" />-->
+
+    <item
+        android:id="@+id/action_refresh"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_refresh_white_18dp"
+        android:title="새로고침" />
 </menu>

@@ -16,17 +16,20 @@ import java.util.List;
 
 public class BuildingRestRoomFragment extends Fragment {
     private static final String ARG_PARAM_URL = "arg_param_url";
+    private static final String ARG_PARAM_TITLE = "arg_param_title";
     private String url;
     private BuildingRestRoomServer server;
+    private String title;
 
     public BuildingRestRoomFragment() {
 
     }
 
-    public static BuildingRestRoomFragment newInstance(String url) {
+    public static BuildingRestRoomFragment newInstance(String url, String title) {
         BuildingRestRoomFragment fragment = new BuildingRestRoomFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM_URL, url);
+        args.putString(ARG_PARAM_TITLE, title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,12 +39,18 @@ public class BuildingRestRoomFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             url = getArguments().getString(ARG_PARAM_URL);
+            title = getArguments().getString(ARG_PARAM_TITLE);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_building_rest_room, container, false);
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
+        getActivity().setTitle(title);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.building_rest_room_layout);
         server = new BuildingRestRoomServer(getContext(), getActivity(), linearLayout);
         if(url.contains("favorite")){

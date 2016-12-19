@@ -30,6 +30,10 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         getActivity().setTitle("설정");
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
         Button btnFirst = (Button) view.findViewById(R.id.setting_first_fragment);
         btnFirst.setOnClickListener(new View.OnClickListener() {
             @Override

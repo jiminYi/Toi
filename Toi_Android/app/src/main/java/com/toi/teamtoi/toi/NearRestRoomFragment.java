@@ -42,9 +42,15 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_building_rest_room, container, false);
-        Log.d("NearRestRoomFragment", "onCreateView");
+        getActivity().setTitle("가까운 화장실");
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
+        minBeacon = null;
         mRecoManager.setRangingListener(this);
         mRecoManager.bind(this);
+        Log.d("NearRestRoomFragment", "onCreateView");
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.building_rest_room_layout);
         server = new BuildingRestRoomServer(getContext(), getActivity(), linearLayout);
         mBluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
@@ -104,6 +110,7 @@ public class NearRestRoomFragment extends RecoFragment implements RECORangingLis
                 postParams.add(major);
                 PostParam minor = new PostParam("minor", minBeacon.getMinor() + "");
                 postParams.add(minor);
+                Log.d("near", "major = " + minBeacon.getMajor() + ", minor = " + minBeacon.getMinor());
                 server.getData(url, postParams);
             } else {
                 Toast.makeText(getContext(), "현재 위치를 알 수 없습니다.", Toast.LENGTH_SHORT).show();

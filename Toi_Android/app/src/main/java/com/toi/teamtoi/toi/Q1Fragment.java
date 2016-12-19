@@ -35,6 +35,10 @@ public class Q1Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_q1, container, false);
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
         TextView question = (TextView) view.findViewById(R.id.tv_q);
         TextView answer = (TextView) view.findViewById(R.id.tv_answer);
         ImageView image = (ImageView) view.findViewById(R.id.iv_help1);

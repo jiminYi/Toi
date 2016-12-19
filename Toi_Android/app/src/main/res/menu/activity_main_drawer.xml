@@ -4,31 +4,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_whole"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/menu_icon"
             android:title="전체 화장실" />
         <item
             android:id="@+id/nav_favorite"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/menu_icon"
             android:title="즐겨찾기" />
         <item
             android:id="@+id/nav_empty"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/menu_icon"
             android:title="빈 화장실" />
         <item
             android:id="@+id/nav_near"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/menu_icon"
             android:title="가까운 화장실" />
         <item
             android:id="@+id/nav_powder_room"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/menu_icon"
             android:title="파우더룸" />
         <item
             android:id="@+id/nav_vending_machine"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/menu_icon"
             android:title="자판기" />
         <item
             android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/menu_icon"
             android:title="설정" />
     </group>
 

@@ -94,6 +94,7 @@ public class BuildingRestRoomServer {
             @Override
             protected void onPostExecute(String result){
                 json = result;
+                Log.d("near", json);
                 showBuildingList();
             }
         }
@@ -146,8 +147,7 @@ public class BuildingRestRoomServer {
                     boolean hasVendingMachine = c.getInt(TAG_VENDING_MACHINE) > 0 ? true : false;
                     boolean isPowderRoom = c.getInt(TAG_POWDER_ROOM) > 0 ? true : false;
                     String imagePath = c.getString(TAG_IMAGE);
-                    RestRoom restRoom = new RestRoom(rid, buildingName, position, waitingTime, floor, maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
-                    Log.d("server", restRoom.toString());
+                    RestRoom restRoom = new RestRoom(context,rid, buildingName, position, waitingTime, floor, maxNumOfPeople, numOfSpace, numOfEmptySpace, hasVendingMachine, isPowderRoom, imagePath);
                     restRoomList.add(restRoom);
                 }
                 RestRoomAdapter restRoomAdapter1 = new RestRoomAdapter(context, R.layout.restroom_item, restRoomList);

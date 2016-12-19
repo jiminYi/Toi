@@ -27,6 +27,10 @@ public class HelpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_help, container, false);
+        if(MainActivity.refreshMenu != null) {
+            MainActivity.refreshMenu.setEnabled(false);
+            MainActivity.refreshMenu.setVisible(false);
+        }
         getActivity().setTitle("도움말");
         Button q1 = (Button) view.findViewById(R.id.help_q1);
         q1.setOnClickListener(new View.OnClickListener() {

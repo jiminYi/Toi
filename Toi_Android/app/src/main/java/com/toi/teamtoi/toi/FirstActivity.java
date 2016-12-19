@@ -40,7 +40,7 @@ public class FirstActivity extends AppCompatActivity {
     }
 
     private void checkCode(String code) {
-        if(code.equals("")) {
+        if(code.equals("sijongseol2016")) {
             Intent intent = new Intent(FirstActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
